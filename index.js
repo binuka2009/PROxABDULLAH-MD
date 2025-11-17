@@ -87,7 +87,7 @@ if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
 
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 9090;
   
   //=============================================
   
@@ -99,7 +99,7 @@ const port = process.env.PORT || 8000;
   const conn = makeWASocket({
           logger: P({ level: 'silent' }),
           printQRInTerminal: false,
-          browser: Browsers.macOS("Safari"),
+          browser: Browsers.macOS("Chrome"),
           syncFullHistory: true,
           auth: state,
           version
