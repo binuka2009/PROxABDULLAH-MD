@@ -76,7 +76,7 @@ filer.download((err, data) => {
 if(err) throw err
 fs.writeFileSync(__dirname + '/sessions/creds.json', decodedData);
 console.log("Session loaded ✅");
-})})}
+})}
 
 const express = require("express");
 const app = express();
