@@ -69,14 +69,21 @@ const {
   
   //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID
-const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-filer.download((err, data) => {
-if(err) throw err
-fs.writeFileSync(__dirname + '/sessions/creds.json', decodedData);
-console.log("Session loaded ✅");
-})}
+    if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
+    
+    const sessdata = config.SESSION_ID;
+    try {
+        // Decode base64 string
+        const decodedData = Buffer.from(sessdata, 'base64').toString('utf-8');
+        
+        // Write decoded data to creds.json
+        fs.writeFileSync(__dirname + '/sessions/creds.json', decodedData);
+        console.log("Session loaded ✅");
+    } catch (err) {
+        console.error("Error decoding session data:", err);
+        throw err;
+    }
+}
 
 const express = require("express");
 const app = express();
