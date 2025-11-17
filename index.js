@@ -47,35 +47,14 @@ const {
   const prefix = config.PREFIX
   
   const ownerNumber = ['923237045919']
-  
-  const tempDir = path.join(os.tmpdir(), 'cache-temp')
-  if (!fs.existsSync(tempDir)) {
-      fs.mkdirSync(tempDir)
-  }
-  
-  const clearTempDir = () => {
-      fs.readdir(tempDir, (err, files) => {
-          if (err) throw err;
-          for (const file of files) {
-              fs.unlink(path.join(tempDir, file), err => {
-                  if (err) throw err;
-              });
-          }
-      });
-  }
-  
-  // Clear the temp directory every 5 minutes
-  setInterval(clearTempDir, 5 * 60 * 1000);
-  
+
   //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
     if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-    
-    const sessdata = config.SESSION_ID.replace("'');
-    try {
-        // Decode base64 string
-        const decodedData = Buffer.from(sessdata, 'base64').toString('utf-8');
-        
+    const sessdata = config.SESSION_ID
+    const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
+    filer.download((err, data) => {
+    if(err) throw err    
         // Write decoded data to creds.json
         fs.writeFileSync(__dirname + '/sessions/creds.json', decodedData);
         console.log("Session loaded ✅");
